@@ -1,0 +1,26 @@
+.holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board {
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.buttons {
+  display: flex;
+}
+.example-button-row button,
+.buttons a {
+  margin-right: 8px;
+}

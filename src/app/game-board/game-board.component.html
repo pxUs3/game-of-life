@@ -1,0 +1,21 @@
+<div class="holder">
+  <div class="board">
+    <div class="row" *ngFor="let line of table; index as v">
+      <ng-container *ngFor="let item of line; index as h">
+        <div id="{{ v }}:{{ h }}" style.background-color="{{item == 1 ? 'black': 'white'}}" class="cell"
+          (mouseenter)="mark($event)"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="holder">
+  <div style="padding: 5px; display: inline-block;">
+    <button mat-raised-button color="primary" (click)="run($event)">run</button>
+  </div>
+  <div style="padding: 5px; display: inline-block;">
+    <button mat-fab color="warn" (click)="stop()">stop</button>
+  </div>
+  <div style="padding: 5px; display: inline-block;">
+    <button mat-flat-button (click)="reset()">reset</button>
+  </div>
+</div>

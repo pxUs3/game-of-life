@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { from, of } from 'rxjs';
+
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  selector: 'app-game-board',
+  templateUrl: './game-board.component.html',
+  styleUrls: ['./game-board.component.css']
 })
-export class TableComponent implements OnInit {
-  directions: number[][] = [
+export class GameBoardComponent implements OnInit {
+
+  private directions: number[][] = [
     [-1, 0],
     [1, 0],
     [0, 1],
@@ -14,9 +15,10 @@ export class TableComponent implements OnInit {
     [1, 1],
     [-1, 1],
     [1, -1],
-    [-1, -1],
+    [-1, -1]
   ];
   table: number[][];
+  jobId: any;
 
   constructor() { }
 
@@ -29,43 +31,67 @@ export class TableComponent implements OnInit {
     }
   }
 
+  mark(event: any) {
+    console.log(event.buttons);
+    if (event.buttons) {
+      const indexes = event.target.id.split(':');
+      this.table[indexes[0]][indexes[1]] = 1;
+    }
+  }
+
   run(event: Event) {
+    if (this.jobId) {
+      clearInterval(this.jobId);
+    }
+    this.jobId = setInterval(() => {
+      this.recalculateBoard();
+    }, 100);
+  }
+
+  stop() {
+    clearInterval(this.jobId);
+  }
+
+  reset() {
+    this.table.forEach(line => {
+      line.fill(0);
+    });
+  }
+
+  private recalculateBoard() {
     for (let vi = 0; vi < this.table.length; vi++) {
       const line = this.table[vi];
       for (let hi = 0; hi < line.length; hi++) {
         const currentElement = this.table[vi][hi];
         const neighbours = this.countNeighbours(hi, vi);
-
         if (currentElement === 1) {
           if (neighbours < 2) {
             this.table[vi][hi] = 0;
-            return;
           }
-
           if (neighbours > 3) {
             this.table[vi][hi] = 0;
-            return;
           }
         }
         if (currentElement === 0 && neighbours === 3) {
           this.table[vi][hi] = 1;
-          return;
         }
       }
     }
   }
-
 
   private countNeighbours(hi: number, vi: number) {
     let neighbours = 0;
 
     this.directions.forEach(d => {
       try {
-        const n = this.table[d[0]][d[1]];
-        if (n === 1) { neighbours++; }
+        const directedHI = hi + d[0];
+        const directedVI = vi + d[1];
+        const n = this.table[directedVI][directedHI];
+        if (n === 1) {
+          neighbours++;
+        }
       } catch (e) { }
     });
     return neighbours;
   }
-
 }
