@@ -14,8 +14,8 @@
 
 .cell {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 }
 .buttons {
   display: flex;
