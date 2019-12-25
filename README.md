@@ -11,6 +11,7 @@ requiring no further input. One interacts with the Game of Life by creating an i
 * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 [wiki link](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+
 [preview](https://game-of-life-sk.herokuapp.com/)
 
 **to-do**
